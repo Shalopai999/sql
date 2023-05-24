@@ -1,0 +1,29 @@
+#create database seminar2;
+
+#use seminar2;
+
+create table sales (
+id int primary key auto_increment,
+order_date varchar(30) not null,
+bucket varchar(30) not null
+);
+
+alter table sales add column class_bucket varchar(30);
+
+insert into sales (order_date, bucket) values
+("2023-05-15", "101 to 300"),
+("2023-05-16", "101 to 300"),
+("2023-05-17", "less than equal to 100"),
+("2023-05-18", "101 to 300"),
+("2023-05-19", "greather than 300");
+
+set sql_safe_updates = 0;
+update sales set class_bucket=
+case when sales.bucket = "less than equal to 100" then "little"
+when sales.bucket = "101 to 300" then "mid"
+when sales.bucket = "greather than 300" then "big"
+else  "fail"
+end;
+
+select * from sales;
+drop table sales;
